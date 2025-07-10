@@ -1,0 +1,9 @@
+---
+# vars file for myrole
+myport: 81
+myos:
+- "RedHat"
+- "CentOS"
+- "Fedora"
+- "Ubuntu"
+- "AlmaLinux"

@@ -1,0 +1,31 @@
+---
+# tasks file for myrole
+- name: install package
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - httpd
+    - php
+    - git 
+    - dialog
+  notify: software install debug
+  when: ansible_facts['distribution'] in myos
+
+- name: setup conf file
+  template:
+    src: my.conf.j2
+    dest: /etc/httpd/conf.d/my.conf
+  notify: service httpd
+
+- name: deploy web page from local
+  copy:
+    src: index.php
+    dest: /var/www/html/index.php
+    
+- name: Git pull code web page
+  git:
+    repo: 'https://github.com/sanckm35/ansible-2025.git'
+    dest: /var/www/html/mygit/
+  ignore_errors: true
+  
